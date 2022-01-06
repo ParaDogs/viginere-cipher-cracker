@@ -21,7 +21,7 @@ RU = Language(
     0, 0)
 
 EN = Language(
-    "abcdefghijklmnopqrstuvwxyz ",
+    "abcdefghijklmnopqrstuvwxyz_",
     {
         'a': 11.682, 'b': 4.434, 'c': 5.238, 'd': 3.174, 'e': 2.799, 'f': 4.027, 'g': 1.642, 'h': 4.200,
         'i': 7.294, 'j': 0.511, 'k': 0.856, 'l': 2.415, 'm': 3.826, 'n': 2.284, 'o': 7.631, 'p': 4.319,
