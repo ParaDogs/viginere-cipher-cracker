@@ -4,7 +4,7 @@ from math import sqrt
 def divisors(n):
     res = [n]
     border = int(sqrt(n)) + 1
-    d = 2
+    d = 1
     while d <= border:
         if n%d == 0:
             res += [d,n//d]

@@ -9,3 +9,19 @@ def repeats(text, min_pattern_length=3):
             if repeats > 1:
                 res[pattern] = repeats
     return res
+
+def column(table, index):
+    assert index < len(table[0])
+    result = []
+    for i in range(len(table)):
+        for j in range(len(table[i])):
+            if j == index:
+                result += [table[i][j]]
+    return result
+
+def avg(collection):
+    assert len(collection) != 0
+    result = 0
+    for _ in collection:
+        result += _
+    return result/len(collection)
