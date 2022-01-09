@@ -10,6 +10,22 @@ def repeats(text, min_pattern_length=3):
                 res[pattern] = repeats
     return res
 
+def table(collection, width):
+    assert width > 0
+    result = []
+    row = []
+    for _ in collection:
+        if len(row) == width-1:
+            row += [_]
+            result += [row]
+            row = []
+        else:
+            row += [_]
+    if row != []:
+        result += [row]
+        row = []
+    return result
+
 def column(table, index):
     assert index < len(table[0])
     result = []
@@ -17,6 +33,12 @@ def column(table, index):
         for j in range(len(table[i])):
             if j == index:
                 result += [table[i][j]]
+    return result
+
+def string_shift(collection, shift, alphabet):
+    result = []
+    for _ in collection:
+        result += [alphabet[(alphabet.find(_)+shift)%len(alphabet)]]
     return result
 
 def avg(collection):

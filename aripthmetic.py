@@ -9,7 +9,7 @@ def divisors(n):
         if n%d == 0:
             res += [d,n//d]
         d += 1
-    return set(res)
+    return list(set(res))
 
 # greatest common divisor
 def gcd(a, b):

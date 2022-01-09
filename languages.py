@@ -8,6 +8,6 @@ class Language:
         self.MIC_min = MIC_min
         self.MIC_max = MIC_max
 
-RU = Language("абвгдеёжзийклмнопрстуфхцчшщъыьэюя_", 0.03, 0.0529, 0, 0)
+RU = Language("абвгдежзийклмнопрстуфхцчшщъыьэюя_", 0.03, 0.0529, 0.053, 0.07)
 
 EN = Language("abcdefghijklmnopqrstuvwxyz_", 0.038, 0.0662, 0, 0)
