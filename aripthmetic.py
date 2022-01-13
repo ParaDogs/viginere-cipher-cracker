@@ -26,3 +26,6 @@ def gcd_list(a):
     if len(a) == 2:
         return gcd(*a)
     return gcd(a[0],gcd_list(a[1:]))
+
+def avg(collection):
+    return sum(collection)/len(collection)

@@ -2,8 +2,6 @@
 from languages import *
 from utils import *
 from aripthmetic import *
-import time
-start_time = time.time()
 
 def coincidence_index(collection):
     sum = 0
@@ -45,20 +43,12 @@ def distances(text, pattern):
     return result
 
 def key_lenght(text, lang):
-    # refactor this code
     patterns_repeats = repeats(text)
-    patterns_priority = priority(patterns_repeats)
-    # patterns_priority = patterns_repeats
-    # print(patterns_priority)
-
     pattern_size_IC = []
-    for pattern in patterns_priority:
+    for pattern in patterns_repeats:
         d = gcd_list(distances(text, pattern))
-        # sizes = sorted(divisors(d),reverse=True)
         sizes = divisors(d)
-        for _ in sizes:
-            if _ == 1:
-                sizes.remove(_)
+        sizes = [_ for _ in sizes if _ != 1]
         if sizes:
             size_IC = dict()
             for size in sizes:
@@ -67,26 +57,20 @@ def key_lenght(text, lang):
                 for index in range(len(t[0])):
                     ICs += [coincidence_index(column(t, index))]
                 size_IC[size] = avg(ICs)
-            pattern_size_IC += [min(size_IC.items(),key=lambda x: abs(lang.IC_max - x[1]))]
-    # for _ in pattern_size_IC:
-    #     print(_)
-    # tmp = sorted(pattern_size_IC,key=lambda x: abs(lang.IC_max - x[1]))
+            pattern_size_IC += [min(size_IC.items(),key=lambda x: abs(lang.IC - x[1]))]
     most_common_size = 0
     max_count = 0
     for _ in pattern_size_IC:
         if pattern_size_IC.count(_) > max_count:
             max_count = pattern_size_IC.count(_)
             most_common_size = _[0] 
-
     return most_common_size
 
 def keys(text, key_len, lang):
     if key_len == None:
         key_len = key_lenght(text, lang)
-    
     t = table(text, key_len)
     columns = [column(t, i) for i in range(key_len)]
-
     shifts = []
     for col in columns[1:]:
         shift_MI = dict()
@@ -97,7 +81,6 @@ def keys(text, key_len, lang):
             if lang.MIC_min <= sm[1] <= lang.MIC_max:
                 shifts += [sm[0]]
                 break
-    # print(shifts)
     keys = []
     for char in lang.alphabet:
         key = char
@@ -106,6 +89,20 @@ def keys(text, key_len, lang):
         keys += [key]
     return keys
 
+def encrypt(text, key, lang:Language):
+    result = ''
+    a = lang.alphabet
+    for i in range(len(text)):
+        result += a[(a.find(text[i]) + a.find(key[i%len(key)])) % len(a)]
+    return result
+
+def encrypt(text, key, alphabet):
+    result = ''
+    a = alphabet
+    for i in range(len(text)):
+        result += a[(a.find(text[i]) + a.find(key[i%len(key)])) % len(a)]
+    return result
+
 def decrypt(text, key, lang):
     result = ''
     a = lang.alphabet
@@ -113,21 +110,10 @@ def decrypt(text, key, lang):
         result += a[(a.find(text[i]) - a.find(key[i%len(key)])) % len(a)]
     return result
 
-file = open('input.txt', 'r', encoding='utf8')
-text = file.read().lower()
-
-key_len = key_lenght(text, RU)
-print(key_len)
-keys_ = keys(text, key_len, RU)
-
-print('KEY LIST:')
-print(keys_)
-print('--------------')
-
-for key in keys_:
-    print('KEY =',key)
-    print(decrypt(text,key,RU))
-    print('--------------')
-    
-
-print("--- %s seconds ---" % (time.time() - start_time))
+def decrypt_all(text, keys, lang):
+    if keys == None or keys == []:
+        keys = keys(text,key_lenght(text,lang),lang)
+    result = []
+    for key in keys:
+        result += [decrypt(text, key, lang)]
+    return result

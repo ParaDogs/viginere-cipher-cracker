@@ -40,10 +40,4 @@ def string_shift(collection, shift, alphabet):
     for _ in collection:
         result += [alphabet[(alphabet.find(_)+shift)%len(alphabet)]]
     return result
-
-def avg(collection):
-    assert len(collection) != 0
-    result = 0
-    for _ in collection:
-        result += _
-    return result/len(collection)
+    
